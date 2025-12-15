@@ -1,0 +1,228 @@
+<Window x:Class="EtudiantOS.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:EtudiantOS.ViewModels"
+        xmlns:conv="clr-namespace:EtudiantOS.Converters"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="ÉtudiantOS" Height="720" Width="1280"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Window.Resources>
+        <conv:BooleanToIconConverter x:Key="BooleanToIconConverter"/>
+
+        <!-- Dashboard Template -->
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                
+                <!-- Calendar Section -->
+                <materialDesign:Card Grid.Column="0" Margin="0,0,10,0" Padding="10" VerticalAlignment="Stretch">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="📅 Emploi du Temps" Style="{DynamicResource MaterialDesignHeadline5TextBlock}" Margin="0,0,0,10"/>
+                        <ListView ItemsSource="{Binding UpcomingEvents}" Grid.Row="1">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding DateDisplay}" Width="100"/>
+                                    <GridViewColumn Header="Heure" DisplayMemberBinding="{Binding TimeRange}" Width="120"/>
+                                    <GridViewColumn Header="Cours" DisplayMemberBinding="{Binding Summary}" Width="250"/>
+                                    <GridViewColumn Header="Salle" DisplayMemberBinding="{Binding Location}" Width="100"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        
+                        <!-- Drag Drop Zone Overlay (Simplified visual) -->
+                        <TextBlock Text="Glissez un fichier .ics ici" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                   Opacity="0.2" FontSize="24" IsHitTestVisible="False" Grid.Row="1"/>
+                    </Grid>
+                </materialDesign:Card>
+
+                <!-- Sidebar: Quick Capture & Tasks -->
+                <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                    <materialDesign:Card Padding="10" Margin="0,0,0,10">
+                        <StackPanel>
+                            <TextBlock Text="⚡ Capture Rapide" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
+                            <TextBox Text="{Binding QuickNoteText, UpdateSourceTrigger=PropertyChanged}"
+                                     materialDesign:HintAssist.Hint="Note rapide..."
+                                     Style="{DynamicResource MaterialDesignOutlinedTextBox}"
+                                     Margin="0,10,0,10" AcceptsReturn="True" Height="60"/>
+                            <Button Command="{Binding AddNoteCommand}" Content="Enregistrer Note" Style="{DynamicResource MaterialDesignFlatButton}"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+
+                    <materialDesign:Card Padding="10" VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <TextBlock Text="✅ Tâches (Inbox)" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
+                            <ItemsControl ItemsSource="{Binding InboxTasks}" Margin="0,10,0,0">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding}" IsChecked="False" Margin="0,5"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Notes Template -->
+        <DataTemplate DataType="{x:Type vm:NotesViewModel}">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <materialDesign:Card Grid.Column="0" Margin="0,0,10,0" Padding="10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="📂 Explorateur" Style="{DynamicResource MaterialDesignHeadline6TextBlock}"/>
+                        <TreeView Grid.Row="1" ItemsSource="{Binding FileStructure}" Margin="0,10,0,0">
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <materialDesign:PackIcon Kind="{Binding IsDirectory, Converter={StaticResource BooleanToIconConverter}}" Margin="0,0,5,0"/>
+                                        <TextBlock Text="{Binding FileName}"/>
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                            <TreeView.ItemContainerStyle>
+                                <Style TargetType="TreeViewItem" BasedOn="{DynamicResource MaterialDesignTreeViewItem}">
+                                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+                                    <!-- Simple binding to trigger selection logic in VM would require behavior or code behind, skipping for simplicity -->
+                                </Style>
+                            </TreeView.ItemContainerStyle>
+                        </TreeView>
+                    </Grid>
+                </materialDesign:Card>
+
+                <materialDesign:Card Grid.Column="1" Margin="10,0,0,0" Padding="20">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding SelectedNote.FileName, FallbackValue='Aucune note sélectionnée'}" Style="{DynamicResource MaterialDesignHeadline5TextBlock}"/>
+                        <TextBox Grid.Row="1" Text="{Binding CurrentContent, UpdateSourceTrigger=PropertyChanged}"
+                                 AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
+                                 Margin="0,10" FontFamily="Consolas" FontSize="14"
+                                 Style="{DynamicResource MaterialDesignOutlinedTextBox}"/>
+                        <Button Grid.Row="2" Command="{Binding SaveCommand}" Content="Sauvegarder" HorizontalAlignment="Right"/>
+                    </Grid>
+                </materialDesign:Card>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Budget Template -->
+        <DataTemplate DataType="{x:Type vm:BudgetViewModel}">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Margin="0,0,20,0">
+                    <materialDesign:Card Padding="20" Margin="0,0,0,20">
+                        <StackPanel>
+                            <TextBlock Text="💰 Entrées" Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Foreground="LightGreen"/>
+                            <TextBox Text="{Binding Budget.Salaire}" materialDesign:HintAssist.Hint="Salaire Alternance" Margin="0,10"/>
+                            <TextBox Text="{Binding Budget.Aides}" materialDesign:HintAssist.Hint="Aides (CAF, Bourses)" Margin="0,10"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+
+                    <materialDesign:Card Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="💸 Sorties Fixes" Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Foreground="IndianRed"/>
+                            <TextBox Text="{Binding Budget.Loyer}" materialDesign:HintAssist.Hint="Loyer" Margin="0,10"/>
+                            <TextBox Text="{Binding Budget.Transport}" materialDesign:HintAssist.Hint="Transport" Margin="0,10"/>
+                            <TextBox Text="{Binding Budget.Telephone}" materialDesign:HintAssist.Hint="Téléphone / Internet" Margin="0,10"/>
+                            <TextBox Text="{Binding Budget.AutresFixes}" materialDesign:HintAssist.Hint="Autres" Margin="0,10"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <materialDesign:Card Padding="20" Margin="0,0,0,20" Background="{DynamicResource PrimaryHueMidBrush}" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}">
+                        <StackPanel>
+                            <TextBlock Text="Reste à Vivre" Style="{DynamicResource MaterialDesignHeadline5TextBlock}" HorizontalAlignment="Center"/>
+                            <TextBlock Text="{Binding Budget.ResteAVivre, StringFormat={}{0:C}}" Style="{DynamicResource MaterialDesignHeadline3TextBlock}" HorizontalAlignment="Center" Margin="0,10"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+
+                    <materialDesign:Card Padding="20">
+                        <StackPanel>
+                            <TextBlock Text="Vue d'ensemble" Style="{DynamicResource MaterialDesignHeadline6TextBlock}" Margin="0,0,0,20"/>
+                            <Grid>
+                                <ProgressBar Value="{Binding Budget.TotalSorties}" Maximum="{Binding Budget.TotalEntrees}" Height="20"/>
+                                <TextBlock Text="{Binding Budget.TotalSorties, StringFormat={}{0:C} Dépensés}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="10"/>
+                            </Grid>
+                            <Button Command="{Binding SaveCommand}" Content="Mettre à jour &amp; Sauvegarder" Margin="0,20,0,0"/>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Settings Template (String) -->
+        <DataTemplate DataType="{x:Type sys:String}">
+            <Grid Margin="50">
+                <StackPanel>
+                    <TextBlock Text="⚙️ Paramètres" Style="{DynamicResource MaterialDesignHeadline4TextBlock}" Margin="0,0,0,20"/>
+                    <TextBlock Text="Dossier Vault :" Style="{DynamicResource MaterialDesignBody1TextBlock}"/>
+                    <TextBox Text="{Binding DataContext.VaultPath, RelativeSource={RelativeSource AncestorType=Window}}" IsReadOnly="True" Margin="0,10"/>
+                    <TextBlock Text="Pour changer le dossier, modifiez le fichier de config ou relancez l'app (Simulation)." FontStyle="Italic"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Navigation Bar -->
+        <materialDesign:Card Grid.Column="0" Padding="10" UniformCornerRadius="0" Background="{DynamicResource MaterialDesignPaper}">
+            <StackPanel Width="60">
+                <Button Command="{Binding NavigateDashboardCommand}" Style="{DynamicResource MaterialDesignIconButton}" ToolTip="Tableau de Bord" Margin="0,10">
+                    <materialDesign:PackIcon Kind="ViewDashboard" Width="24" Height="24"/>
+                </Button>
+                <Button Command="{Binding NavigateNotesCommand}" Style="{DynamicResource MaterialDesignIconButton}" ToolTip="Notes" Margin="0,10">
+                    <materialDesign:PackIcon Kind="Notebook" Width="24" Height="24"/>
+                </Button>
+                <Button Command="{Binding NavigateBudgetCommand}" Style="{DynamicResource MaterialDesignIconButton}" ToolTip="Budget" Margin="0,10">
+                    <materialDesign:PackIcon Kind="Finance" Width="24" Height="24"/>
+                </Button>
+                <Button Command="{Binding NavigateSettingsCommand}" Style="{DynamicResource MaterialDesignIconButton}" ToolTip="Paramètres" Margin="0,10" VerticalAlignment="Bottom">
+                    <materialDesign:PackIcon Kind="Settings" Width="24" Height="24"/>
+                </Button>
+            </StackPanel>
+        </materialDesign:Card>
+
+        <!-- Main Content -->
+        <ContentControl Grid.Column="1" Content="{Binding CurrentView}"/>
+    </Grid>
+</Window>

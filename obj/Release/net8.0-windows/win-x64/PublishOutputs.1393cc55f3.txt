@@ -1,0 +1,2 @@
+C:\Users\adamb\Downloads\Github\EtudiantOS\bin\Release\net8.0-windows\win-x64\publish\EtudiantOS.pdb
+C:\Users\adamb\Downloads\Github\EtudiantOS\bin\Release\net8.0-windows\win-x64\publish\EtudiantOS.exe
