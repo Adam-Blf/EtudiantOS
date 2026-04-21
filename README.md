@@ -1,15 +1,43 @@
+# EtudiantOS
 
+Application de bureau Windows pour la gestion de la vie etudiante. Interface WPF MVVM avec suivi des cours, notes, absences et emploi du temps.
 
-![Dernier commit](https://img.shields.io/github/last-commit/Adam-Blf/EtudiantOS?style=flat&logo=git&logoColor=white&color=0080ff&label=Dernier%20commit) ![Langage principal](https://img.shields.io/github/languages/top/Adam-Blf/EtudiantOS?style=flat&logo=git&logoColor=white&color=0080ff&label=Langage%20principal) ![Nombre de langages](https://img.shields.io/github/languages/count/Adam-Blf/EtudiantOS?style=flat&logo=git&logoColor=white&color=0080ff&label=Nombre%20de%20langages)
+## Stack
 
-### Construit avec les outils et technologies : 
+- C# .NET (WPF, XAML)
+- Pattern MVVM (Models / ViewModels / Services / Converters)
+- Architecture par couches, persistance locale
 
+## Structure
 
-🇫🇷 Français | 🇬🇧 Anglais | 🇪🇸 Espagnol | 🇮🇹 Italien | 🇵🇹 Portugais | 🇷🇺 Russe | 🇩🇪 Allemand | 🇹🇷 Turc
+- `Models/` · entites metier (cours, notes, evenements)
+- `ViewModels/` · logique de presentation MVVM
+- `Services/` · acces donnees et logique applicative
+- `Converters/` · converters XAML
+- `MainWindow.xaml` · fenetre principale de l'app
 
+## Lancement
+
+```bash
+git clone https://github.com/Adam-Blf/EtudiantOS
+cd EtudiantOS
+dotnet restore
+dotnet run
+```
+
+Ou ouvrir `EtudiantOS.csproj` dans Visual Studio puis F5.
+
+## Prerequis
+
+- .NET SDK compatible WPF (Windows uniquement)
+- Visual Studio 2022 ou VS Code + extension C#
+
+## Licence
+
+MIT
 
 ---
 
 <p align="center">
-  <sub>Par <a href="https://adam.beloucif.com">Adam Beloucif</a> · Data Engineer & Fullstack Developer · <a href="https://github.com/Adam-Blf">GitHub</a></sub>
+  <sub>Par <a href="https://adam.beloucif.com">Adam Beloucif</a> · Data Engineer & Fullstack Developer · <a href="https://github.com/Adam-Blf">GitHub</a> · <a href="https://www.linkedin.com/in/adambeloucif/">LinkedIn</a></sub>
 </p>
