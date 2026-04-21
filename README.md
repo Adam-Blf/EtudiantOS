@@ -1,5 +1,11 @@
 # EtudiantOS
 
+![Status](https://img.shields.io/badge/status-academic-blue)
+![C#](https://img.shields.io/badge/C%23-239120?logo=c-sharp&logoColor=white)
+![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=white)
+![WPF](https://img.shields.io/badge/WPF-XAML-5C2D91)
+![MVVM](https://img.shields.io/badge/pattern-MVVM-blueviolet)
+
 Application de bureau Windows pour la gestion de la vie etudiante. Interface WPF MVVM avec suivi des cours, notes, absences et emploi du temps.
 
 ## Stack
