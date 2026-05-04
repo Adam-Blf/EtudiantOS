@@ -1,5 +1,10 @@
 # EtudiantOS
 
+<!-- adam-badges:start -->
+[![commits](https://img.shields.io/github/commit-activity/t/Adam-Blf/EtudiantOS?color=001329&label=commits&style=flat-square)](https://github.com/Adam-Blf/EtudiantOS/commits) [![visites](https://hits.sh/github.com/Adam-Blf/EtudiantOS.svg?style=flat-square&label=visites&color=001329)](https://hits.sh/github.com/Adam-Blf/EtudiantOS/) [![last commit](https://img.shields.io/github/last-commit/Adam-Blf/EtudiantOS?color=D4A437&style=flat-square&label=dernier%20push)](https://github.com/Adam-Blf/EtudiantOS/commits) [![top language](https://img.shields.io/github/languages/top/Adam-Blf/EtudiantOS?style=flat-square)](https://github.com/Adam-Blf/EtudiantOS) [![license](https://img.shields.io/github/license/Adam-Blf/EtudiantOS?style=flat-square&color=D4A437)](LICENSE)
+<!-- adam-badges:end -->
+
+
 ![Status](https://img.shields.io/badge/status-academic-blue)
 ![C#](https://img.shields.io/badge/C%23-239120?logo=c-sharp&logoColor=white)
 ![.NET](https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=white)
