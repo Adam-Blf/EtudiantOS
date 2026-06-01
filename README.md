@@ -13,6 +13,23 @@
 
 Application de bureau Windows pour la gestion de la vie etudiante. Interface WPF MVVM avec suivi des cours, notes, absences et emploi du temps.
 
+## Architecture
+
+```mermaid
+flowchart TB
+    A["MainWindow.xaml<br/>vue WPF · XAML"]
+    B["Converters/<br/>converters de liaison XAML"]
+    C["ViewModels/<br/>logique de presentation MVVM · binding"]
+    D["Services/<br/>acces donnees · logique applicative"]
+    E["Models/<br/>entites metier · cours · notes · evenements"]
+    F["Persistance locale<br/>stockage des donnees etudiantes"]
+    A --> C
+    B --> A
+    C --> D
+    D --> E
+    D --> F
+```
+
 ## Stack
 
 - C# .NET (WPF, XAML)
