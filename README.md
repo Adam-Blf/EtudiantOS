@@ -17,11 +17,11 @@ Application de bureau Windows pour la gestion de la vie etudiante. Interface WPF
 
 ```mermaid
 flowchart TB
-    A["MainWindow.xaml<br/>vue WPF · XAML"]
+    A["MainWindow.xaml<br/>vue WPF - XAML"]
     B["Converters/<br/>converters de liaison XAML"]
-    C["ViewModels/<br/>logique de presentation MVVM · binding"]
-    D["Services/<br/>acces donnees · logique applicative"]
-    E["Models/<br/>entites metier · cours · notes · evenements"]
+    C["ViewModels/<br/>logique de presentation MVVM - binding"]
+    D["Services/<br/>acces donnees - logique applicative"]
+    E["Models/<br/>entites metier - cours - notes - evenements"]
     F["Persistance locale<br/>stockage des donnees etudiantes"]
     A --> C
     B --> A
@@ -38,11 +38,11 @@ flowchart TB
 
 ## Structure
 
-- `Models/` · entites metier (cours, notes, evenements)
-- `ViewModels/` · logique de presentation MVVM
-- `Services/` · acces donnees et logique applicative
-- `Converters/` · converters XAML
-- `MainWindow.xaml` · fenetre principale de l'app
+- `Models/` - entites metier (cours, notes, evenements)
+- `ViewModels/` - logique de presentation MVVM
+- `Services/` - acces donnees et logique applicative
+- `Converters/` - converters XAML
+- `MainWindow.xaml` - fenetre principale de l'app
 
 ## Lancement
 
@@ -67,7 +67,7 @@ MIT
 ---
 
 <p align="center">
-  <sub>Par <a href="https://adam.beloucif.com">Adam Beloucif</a> · Data Engineer & Fullstack Developer · <a href="https://github.com/Adam-Blf">GitHub</a> · <a href="https://www.linkedin.com/in/adambeloucif/">LinkedIn</a></sub>
+  <sub>Par <a href="https://adam.beloucif.com">Adam Beloucif</a> - Data Engineer & Fullstack Developer - <a href="https://github.com/Adam-Blf">GitHub</a> - <a href="https://www.linkedin.com/in/adambeloucif/">LinkedIn</a></sub>
 </p>
 
 
